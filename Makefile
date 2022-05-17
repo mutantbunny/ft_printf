@@ -3,11 +3,11 @@ CFLAGS = -Wextra -Wall -Werror
 AR = ar rcs
 REMOVE = rm -f
 
-SOURCE_FILES = fprintf.c
-HEADER_FILES = fprintf.h
+SOURCE_FILES = ft_printf.c gen_parsers.c int_parsers.c utils.c
+HEADER_FILES = ft_printf.h
 OBJ_FILES = $(SOURCE_FILES:.c=.o)
-BONUS_SOURCE_FILES = fprintf_bonus.c
-BONUS_HEADER_FILES = fprintf_bonus.h
+BONUS_SOURCE_FILES = ft_printf_bonus.c
+BONUS_HEADER_FILES = ft_printf_bonus.h
 BONUS_OBJ_FILES = $(BONUS_SOURCE_FILES:.c=.o)
 LIBFT_DIR = ./libft
 

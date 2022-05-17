@@ -6,13 +6,13 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 18:02:41 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/16 04:03:48 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/16 22:05:17 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int parse_code(char **str, va_list args, int copied)
+int	parse_code(const char **str, va_list args, int copied)
 {
 	if (**str == 'c')
 		return (copied + parse_char(str, args));
@@ -46,7 +46,7 @@ int	ft_printf(const char *str, ...)
 	len = 0;
 	copied = 0;
 	va_start(args, str);
-	while(str[len] != '\0')
+	while (str[len] != '\0')
 	{
 		if (str[len++] != '%')
 			continue ;
