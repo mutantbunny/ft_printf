@@ -6,32 +6,32 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 18:02:41 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/18 00:48:46 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/18 01:50:23 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	parse_code(const char *str, va_list args, int copied)
+int	parse_code(const char *str, va_list args)
 {
 	if (*str == 'c')
-		return (copied + parse_char(args));
+		return (parse_char(args));
 	else if (*str == 's')
-		return (copied + parse_string(args));
+		return (parse_string(args));
 	else if (*str == 'p')
-		return (copied + parse_pointer(args));
+		return (parse_pointer(args));
 	else if (*str == 'd' || *str == 'i')
-		return (copied + parse_int(args));
+		return (parse_int(args));
 	else if (*str == 'u')
-		return (copied + parse_uint(args));
+		return (parse_uint(args));
 	else if (*str == 'x')
-		return (copied + parse_hex(args, LOWERCASE));
+		return (parse_hex(args, LOWERCASE));
 	else if (*str == 'X')
-		return (copied + parse_hex(args, UPPERCASE));
+		return (parse_hex(args, UPPERCASE));
 	else
 	{
 		write(1, str, 1);
-		return (copied + 1);
+		return (1);
 	}
 }
 
@@ -52,7 +52,7 @@ int	ft_printf(const char *str, ...)
 			continue ;
 		write(1, str, len);
 		str += len;
-		copied += (len + parse_code(str++, args, copied));
+		copied += (len + parse_code(str++, args));
 		if (str == NULL)
 			return (-1);
 		len = 0;

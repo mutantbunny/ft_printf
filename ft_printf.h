@@ -6,7 +6,7 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 18:02:55 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/18 00:50:59 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/18 01:51:46 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # endif
 
 int		ft_printf(const char *str, ...);
-int		parse_code(const char *str, va_list args, int copied);
+int		parse_code(const char *str, va_list args);
 int		parse_char(va_list args);
 int		parse_pointer(va_list args);
 int		parse_string(va_list args);
