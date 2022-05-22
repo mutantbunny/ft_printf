@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_printf_bonus.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 18:02:55 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/18 01:51:46 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/22 04:12:23 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,31 @@
 # include <unistd.h>
 # include "libft/libft.h"
 
-# define SPECIFIER 1
-# define INVALID 0
-
 # define UPPERCASE 1U
 # define LOWERCASE 2U
-# define LEAD_0X 4U
+# define PAD_WITH_ZEROS 4U
+# define HEX_PREFIX 8U
+# define PLUS_PREFIX 16U
+# define SPACE_PREFIX 32U
+# define JUSTIFY_LEFT 64U
 
 # ifndef INT_MIN
 #  define INT_MIN -2147483648
 # endif
 
-int		ft_printf(const char *str, ...);
-int		parse_code(const char *str, va_list args);
-int		parse_char(va_list args);
-int		parse_pointer(va_list args);
-int		parse_string(va_list args);
-int		parse_int(va_list args);
-int		parse_uint(va_list args);
-int		parse_hex(va_list args, unsigned int flags);
+typedef struct	s_format
+{
+	int				width;
+	int				precision;
+	unsigned int	flags;
+}	t_format;
+
+int		parse_char(va_list args, t_format format);
+int		parse_pointer(va_list args, t_format format);
+int		parse_string(va_list args, t_format format);
+int		parse_int(va_list args, t_format format);
+int		parse_uint(va_list args, t_format format);
+int		parse_hex(va_list args, t_format format);
 char	get_hex_digit(unsigned int digit, unsigned int flags);
 int		putnbr_hex_ptr(unsigned long long nbr);
 int		putnbr_hex_uint(unsigned int nbr, unsigned int flags);

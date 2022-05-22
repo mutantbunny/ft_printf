@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 23:29:40 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/18 00:50:38 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/22 02:49:33 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 
 char	get_hex_digit(unsigned int digit, unsigned int flags)
 {
@@ -60,7 +60,7 @@ int	putnbr_hex_uint(unsigned int nbr, unsigned int flags)
 			nbr >>= 4U;
 		}
 	}
-	if (flags & LEAD_0X)
+	if (flags & HEX_PREFIX)
 	{
 		if (flags & UPPERCASE)
 			buf[--pos] = 'X';
