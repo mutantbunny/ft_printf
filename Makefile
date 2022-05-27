@@ -6,7 +6,8 @@ REMOVE = rm -f
 SOURCE_FILES = ft_printf.c gen_parsers.c int_parsers.c utils.c
 HEADER_FILES = ft_printf.h
 OBJ_FILES = $(SOURCE_FILES:.c=.o)
-BONUS_SOURCE_FILES = ft_printf_bonus.c gen_parsers_bonus.c int_parsers_bonus.c utils_bonus.c
+BONUS_SOURCE_FILES = ft_printf_bonus.c main_parsers_bonus.c putnbr_bonus.c \
+						gen_parsers_bonus.c int_parsers_bonus.c utils_bonus.c
 BONUS_HEADER_FILES = ft_printf_bonus.h
 BONUS_OBJ_FILES = $(BONUS_SOURCE_FILES:.c=.o)
 LIBFT_DIR = ./libft
@@ -40,8 +41,8 @@ clean:
 	$(REMOVE) $(OBJ_FILES) $(BONUS_OBJ_FILES)
 	make -C $(LIBFT_DIR) clean
 
-fclean: clean
-	$(REMOVE) $(NAME) $(NAME_BONUS)
+fclean:
+	$(REMOVE) $(OBJ_FILES) $(BONUS_OBJ_FILES) $(NAME) $(NAME_BONUS)
 	make -C $(LIBFT_DIR) fclean
 
 re: fclean all
