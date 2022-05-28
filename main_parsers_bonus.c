@@ -6,7 +6,7 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 18:02:41 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/25 19:07:31 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/28 00:15:08 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 unsigned int	parse_flags(const char **str)
 {
 	unsigned int	flags;
-	char			*s;
+	const char		*s;
 
 	s = *str;
 	flags = 0;
@@ -46,7 +46,7 @@ int	parse_width(const char **str)
 	while (ft_isdigit(**str))
 	{
 		width += (**str - '0');
-		*str++;
+		(*str)++;
 	}
 	return (width);
 }
@@ -57,13 +57,13 @@ int	parse_precision(const char **str, t_format *format)
 
 	if (**str != '.')
 		return (0);
-	*str++;
+	(*str)++;
 	format->flags |= PRECISION_SET;
 	precision = 0;
 	while (ft_isdigit(**str))
 	{
 		precision += (**str - '0');
-		*str++;
+		(*str)++;
 	}
 	return (precision);
 }

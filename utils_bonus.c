@@ -6,15 +6,15 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 23:29:40 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/26 20:24:39 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/28 00:10:22 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_bonus.h"
 
-int write_repeated (char ch, int num_ch)
+int	write_repeated(char ch, int num_ch)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (count < num_ch)
@@ -23,4 +23,11 @@ int write_repeated (char ch, int num_ch)
 		count++;
 	}
 	return (count);
+}
+
+int	min(int a, int b)
+{
+	if (a < b)
+		return (a);
+	return (b);
 }

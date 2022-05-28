@@ -6,7 +6,7 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 02:45:21 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/27 00:51:28 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/28 00:13:12 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,21 @@
 int	parse_char(va_list args, t_format format)
 {
 	char	ch;
+	int		copied;
 
 	ch = (char)va_arg(args, int);
-
-	write(1, &ch, 1);
-	return (1);
+	copied = 0;
+	if (format.flags & JUSTIFY_LEFT)
+	{
+		write(1, &ch, 1);
+		copied += write_repeated(' ', format.width - 1) + 1;
+	}
+	else
+	{
+		copied += write_repeated(' ', format.width - 1) + 1;
+		write(1, &ch, 1);
+	}
+	return (copied);
 }
 
 int	parse_pointer(va_list args, t_format format)
@@ -38,16 +48,26 @@ int	parse_pointer(va_list args, t_format format)
 
 int	parse_string(va_list args, t_format format)
 {
+	int		copied;
 	int		len;
 	char	*arg;
 
 	arg = va_arg(args, char *);
+	copied = 0;
 	if (arg == NULL)
 	{
-		write(1, "(null)", 6);
-		return (6);
+		if ((format.flags & !PRECISION_SET) || format.precision >= 6)
+			len = 6;
+		else
+			len = 0;
+		arg = "(null)";
 	}
-	len = ft_strlen(arg);
-	write(1, arg, len);
-	return (len);
+	else
+		len = min(ft_strlen(arg), format.precision);
+	if ((format.flags & !JUSTIFY_LEFT))
+		copied += write_repeated(' ', format.width - len);
+	copied += write(1, arg, len);
+	if ((format.flags & JUSTIFY_LEFT))
+		copied += write_repeated(' ', format.width - len);
+	return (copied);
 }

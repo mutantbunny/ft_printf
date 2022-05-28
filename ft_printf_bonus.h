@@ -6,7 +6,7 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 18:02:55 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/26 22:57:13 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/28 00:46:03 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,43 @@ typedef struct s_format
 	unsigned int	flags;
 }	t_format;
 
+// main_parsers_bonus.c
 unsigned int	parse_flags(const char **str);
 int				parse_width(const char **str);
 int				parse_precision(const char **str, t_format *format);
 int				parse_specifier(const char *str, t_format format, va_list args);
 int				parse_format(const char *str, va_list args);
+
+// gen_parsers_bonus.c
 int				parse_char(va_list args, t_format format);
 int				parse_pointer(va_list args, t_format format);
 int				parse_string(va_list args, t_format format);
+
+// int_parsers_bonus.c
 int				parse_int(va_list args, t_format format);
 int				parse_uint(va_list args, t_format format);
-int				parse_hex(va_list args, t_format format);
-char			get_hex_digit(unsigned int digit, t_format format);
-int				putnbr_hex_ptr(unsigned long long nbr);
-int				putnbr_hex_uint(unsigned int nbr, t_format format);
+int				parse_hex_upper(va_list args, t_format format);
+int				parse_hex_lower(va_list args, t_format format);
+
+// dec_utils_bonus.c
+int				write_dec_left_justified(char *s, int len,
+					t_format format, int num_zeros);
+int				write_dec_right_justified(char *s, int len,
+					t_format format, int num_zeros);
+int				write_dec_padded(char *s, int len, t_format format);
 int				putnbr_dec_uint(unsigned int nbr, t_format format);
+
+// hex_utils_bonus.c
+int				write_hex_left_justified(char *s, int len,
+					t_format format, int num_zeros);
+int				write_hex_right_justified(char *s, int len,
+					t_format format, int num_zeros);
+int				write_hex_padded(char *s, int len, t_format format);
+char			get_hex_digit(unsigned int digit, t_format format);
+int				putnbr_hex_uint(unsigned int nbr, t_format format);
+
+// utils_bonus.c
+int				write_repeated(char ch, int num_ch);
+int				min(int a, int b);
 
 #endif

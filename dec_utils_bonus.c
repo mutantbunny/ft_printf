@@ -6,17 +6,18 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 23:29:40 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/26 22:09:01 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:17:26 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_bonus.h"
 
-int write_dec_left_justified(char *start, int len, t_format format, int num_zeros)
+int	write_dec_left_justified(char *s, int len, t_format format, int num_zeros)
 {
-	int num_spaces;
-	int copied;
+	int	num_spaces;
+	int	copied;
 
+	copied = 0;
 	num_spaces = format.width - num_zeros - len;
 	if (format.flags & (MINUS_PREFIX | PLUS_PREFIX | SPACE_PREFIX))
 		num_spaces--;
@@ -27,14 +28,14 @@ int write_dec_left_justified(char *start, int len, t_format format, int num_zero
 	else if (format.flags & (SPACE_PREFIX))
 		copied = write(1, " ", 1);
 	copied += write_repeated('0', num_zeros);
-	copied += write(1, start, len);
+	copied += write(1, s, len);
 	return (copied + write_repeated(' ', num_spaces));
 }
 
-int write_dec_right_justified(char *start, int len, t_format format, int num_zeros)
+int	write_dec_right_justified(char *s, int len, t_format format, int num_zeros)
 {
-	int num_spaces;
-	int copied;
+	int	num_spaces;
+	int	copied;
 
 	num_spaces = format.width - num_zeros - len;
 	if (format.flags & (MINUS_PREFIX | PLUS_PREFIX | SPACE_PREFIX))
@@ -48,13 +49,13 @@ int write_dec_right_justified(char *start, int len, t_format format, int num_zer
 	else if (format.flags & (SPACE_PREFIX))
 		copied += write(1, " ", 1);
 	copied += write_repeated('0', num_zeros);
-	return (copied + write(1, start, len));
+	return (copied + write(1, s, len));
 }
 
-int write_dec_padded(char *start, int len, t_format format)
+int	write_dec_padded(char *s, int len, t_format format)
 {
-	int remaining;
-	int num_zeros;
+	int	remaining;
+	int	num_zeros;
 
 	if ((format.flags & PRECISION_SET))
 		num_zeros = format.precision - len;
@@ -67,9 +68,9 @@ int write_dec_padded(char *start, int len, t_format format)
 	else
 		num_zeros = 0;
 	if (format.flags & JUSTIFY_LEFT)
-		return(write_dec_left_justified(start, len, format, num_zeros));
+		return (write_dec_left_justified(s, len, format, num_zeros));
 	else
-		return(write_dec_right_justified(start, len, format, num_zeros));
+		return (write_dec_right_justified(s, len, format, num_zeros));
 }
 
 int	putnbr_dec_uint(unsigned int nbr, t_format format)
