@@ -6,7 +6,7 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 02:45:21 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/28 00:13:12 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/29 02:10:05 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ int	parse_pointer(va_list args, t_format format)
 		return (5);
 	}
 	format.flags = (format.flags & JUSTIFY_LEFT) | HEX_PREFIX | LOWERCASE;
-	return (putnbr_hex_uint((unsigned long long)ptr, format));
+	return (putnbr_hex_uint((unsigned long)ptr, format));
 }
 
-int	parse_string(va_list args, t_format format)
+int	parse_str(va_list args, t_format format)
 {
 	int		copied;
 	int		len;
@@ -56,15 +56,17 @@ int	parse_string(va_list args, t_format format)
 	copied = 0;
 	if (arg == NULL)
 	{
-		if ((format.flags & !PRECISION_SET) || format.precision >= 6)
+		if (!(format.flags & PRECISION_SET) || format.precision >= 6)
 			len = 6;
 		else
 			len = 0;
 		arg = "(null)";
 	}
-	else
+	else if (format.flags & PRECISION_SET)
 		len = min(ft_strlen(arg), format.precision);
-	if ((format.flags & !JUSTIFY_LEFT))
+	else
+		len = ft_strlen(arg);
+	if (!(format.flags & JUSTIFY_LEFT))
 		copied += write_repeated(' ', format.width - len);
 	copied += write(1, arg, len);
 	if ((format.flags & JUSTIFY_LEFT))

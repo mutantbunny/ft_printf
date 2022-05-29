@@ -6,7 +6,7 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 18:02:41 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/22 13:30:39 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/29 00:52:51 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_printf(const char *str, ...)
 		if (str[len + 1] == '\0')
 			return (-1);
 		str += (len + 1);
-		copied += (len + parse_format(str++, args));
+		copied += (len + parse_format(&str, args));
 		if (str == NULL)
 			return (-1);
 		len = 0;

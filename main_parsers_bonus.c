@@ -6,7 +6,7 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 18:02:41 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/28 00:15:08 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/29 01:49:41 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,24 @@
 unsigned int	parse_flags(const char **str)
 {
 	unsigned int	flags;
-	const char		*s;
 
-	s = *str;
 	flags = 0;
-	while (s++)
+	while (**str)
 	{
-		if (*s == '0')
+		if (**str == '0')
 			flags |= PAD_WITH_ZEROS;
-		else if (*s == ' ')
+		else if (**str == ' ')
 			flags |= SPACE_PREFIX;
-		else if (*s == '+')
+		else if (**str == '+')
 			flags |= PLUS_PREFIX;
-		else if (*s == '-')
+		else if (**str == '-')
 			flags |= JUSTIFY_LEFT;
-		else if (*s == '#')
+		else if (**str == '#')
 			flags |= HEX_PREFIX;
 		else
 			break ;
+		(*str)++;
 	}
-	*str = s;
 	return (flags);
 }
 
@@ -45,7 +43,7 @@ int	parse_width(const char **str)
 	width = 0;
 	while (ft_isdigit(**str))
 	{
-		width += (**str - '0');
+		width = width * 10 + (**str - '0');
 		(*str)++;
 	}
 	return (width);
@@ -62,7 +60,7 @@ int	parse_precision(const char **str, t_format *format)
 	precision = 0;
 	while (ft_isdigit(**str))
 	{
-		precision += (**str - '0');
+		precision = precision * 10 + (**str - '0');
 		(*str)++;
 	}
 	return (precision);
@@ -75,7 +73,7 @@ int	parse_specifier(const char *str, t_format format, va_list args)
 	else if (*str == 'c')
 		return (parse_char(args, format));
 	else if (*str == 's')
-		return (parse_string(args, format));
+		return (parse_str(args, format));
 	else if (*str == 'p')
 		return (parse_pointer(args, format));
 	else if (*str == 'd' || *str == 'i')
@@ -93,12 +91,12 @@ int	parse_specifier(const char *str, t_format format, va_list args)
 	}
 }
 
-int	parse_format(const char *str, va_list args)
+int	parse_format(const char **str, va_list args)
 {
 	t_format	format;
 
-	format.flags = parse_flags(&str);
-	format.width = parse_width(&str);
-	format.precision = parse_precision(&str, &format);
-	return (parse_specifier(str, format, args));
+	format.flags = parse_flags(str);
+	format.width = parse_width(str);
+	format.precision = parse_precision(str, &format);
+	return (parse_specifier((*str)++, format, args));
 }

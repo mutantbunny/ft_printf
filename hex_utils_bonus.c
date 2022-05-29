@@ -6,7 +6,7 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 23:29:40 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/27 18:15:36 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/29 02:56:10 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,11 @@ int	write_hex_right_justified(char *s, int len, t_format format, int num_zeros)
 
 int	write_hex_padded(char *s, int len, t_format format)
 {
-	int	remaining;
 	int	num_zeros;
 
 	if ((format.flags & PRECISION_SET))
 		num_zeros = format.precision - len;
-	else if (format.flags & (PAD_WITH_ZEROS | !JUSTIFY_LEFT))
+	else if ((format.flags & PAD_WITH_ZEROS) || !(format.flags & JUSTIFY_LEFT))
 	{
 		num_zeros = format.width - len;
 		if (format.flags & HEX_PREFIX)
@@ -83,19 +82,22 @@ char	get_hex_digit(unsigned int digit, t_format format)
 	return (lower_digits[digit]);
 }
 
-int	putnbr_hex_uint(unsigned int nbr, t_format format)
+int	putnbr_hex_uint(unsigned long nbr, t_format format)
 {
 	char	buf[16];
 	int		pos;
 
 	pos = 16;
 	if (nbr == 0)
+	{
 		buf[--pos] = '0';
+		format.flags &= (~HEX_PREFIX);
+	}
 	else
 	{
-		while (nbr != 0)
+		while (nbr)
 		{
-			buf[--pos] = get_hex_digit(nbr & 15U, format);
+			buf[--pos] = get_hex_digit((unsigned int)(nbr & 15UL), format);
 			nbr >>= 4U;
 		}
 	}
