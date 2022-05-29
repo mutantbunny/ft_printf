@@ -6,33 +6,33 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 02:45:21 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/29 02:10:05 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/29 03:16:52 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_bonus.h"
 
-int	parse_char(va_list args, t_format format)
+int	parse_char(va_list args, t_format *format)
 {
 	char	ch;
 	int		copied;
 
 	ch = (char)va_arg(args, int);
 	copied = 0;
-	if (format.flags & JUSTIFY_LEFT)
+	if (format->flags & JUSTIFY_LEFT)
 	{
 		write(1, &ch, 1);
-		copied += write_repeated(' ', format.width - 1) + 1;
+		copied += write_repeated(' ', format->width - 1) + 1;
 	}
 	else
 	{
-		copied += write_repeated(' ', format.width - 1) + 1;
+		copied += write_repeated(' ', format->width - 1) + 1;
 		write(1, &ch, 1);
 	}
 	return (copied);
 }
 
-int	parse_pointer(va_list args, t_format format)
+int	parse_pointer(va_list args, t_format *format)
 {
 	void	*ptr;
 
@@ -42,11 +42,11 @@ int	parse_pointer(va_list args, t_format format)
 		write(1, "(nil)", 5);
 		return (5);
 	}
-	format.flags = (format.flags & JUSTIFY_LEFT) | HEX_PREFIX | LOWERCASE;
+	format->flags = (format->flags & JUSTIFY_LEFT) | HEX_PREFIX | LOWERCASE;
 	return (putnbr_hex_uint((unsigned long)ptr, format));
 }
 
-int	parse_str(va_list args, t_format format)
+int	parse_str(va_list args, t_format *format)
 {
 	int		copied;
 	int		len;
@@ -56,20 +56,20 @@ int	parse_str(va_list args, t_format format)
 	copied = 0;
 	if (arg == NULL)
 	{
-		if (!(format.flags & PRECISION_SET) || format.precision >= 6)
+		if (!(format->flags & PRECISION_SET) || format->precision >= 6)
 			len = 6;
 		else
 			len = 0;
 		arg = "(null)";
 	}
-	else if (format.flags & PRECISION_SET)
-		len = min(ft_strlen(arg), format.precision);
+	else if (format->flags & PRECISION_SET)
+		len = min(ft_strlen(arg), format->precision);
 	else
 		len = ft_strlen(arg);
-	if (!(format.flags & JUSTIFY_LEFT))
-		copied += write_repeated(' ', format.width - len);
+	if (!(format->flags & JUSTIFY_LEFT))
+		copied += write_repeated(' ', format->width - len);
 	copied += write(1, arg, len);
-	if ((format.flags & JUSTIFY_LEFT))
-		copied += write_repeated(' ', format.width - len);
+	if ((format->flags & JUSTIFY_LEFT))
+		copied += write_repeated(' ', format->width - len);
 	return (copied);
 }

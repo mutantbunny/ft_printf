@@ -6,7 +6,7 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 18:02:41 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/29 01:49:41 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/29 03:19:05 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	parse_precision(const char **str, t_format *format)
 	return (precision);
 }
 
-int	parse_specifier(const char *str, t_format format, va_list args)
+int	parse_specifier(const char *str, t_format *format, va_list args)
 {
 	if (*str == '\0')
 		return (0);
@@ -98,5 +98,5 @@ int	parse_format(const char **str, va_list args)
 	format.flags = parse_flags(str);
 	format.width = parse_width(str);
 	format.precision = parse_precision(str, &format);
-	return (parse_specifier((*str)++, format, args));
+	return (parse_specifier((*str)++, &format, args));
 }
