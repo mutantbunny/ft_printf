@@ -14,7 +14,7 @@ BONUS_OBJ_FILES = $(BONUS_SOURCE_FILES:.c=.o)
 LIBFT_DIR = ./libft
 
 NAME = libftprintf.a
-BONUS_NAME = $(NAME:.a=_bonus.a)
+NAME_BONUS = $(NAME:.a=_bonus.a)
 
 all: $(NAME)
 
@@ -22,15 +22,15 @@ $(NAME): $(OBJ_FILES) $(HEADER_FILES) $(LIBFT_DIR)/libft.a
 	cp $(LIBFT_DIR)/libft.a ./$(NAME)
 	$(AR) $(NAME) $(OBJ_FILES)
 
-bonus: $(BONUS_NAME)
+bonus: $(NAME_BONUS)
 
 $(LIBFT_DIR)/libft.a:
 	make -C $(LIBFT_DIR) all
 
-$(BONUS_NAME): $(BONUS_OBJ_FILES) $(LIBFT_DIR)/libft.a
-	cp $(LIBFT_DIR)/libft.a ./$(BONUS_NAME)
-	$(AR) $(BONUS_NAME) $(BONUS_OBJ_FILES)
-	cp $(BONUS_NAME) $(NAME)
+$(NAME_BONUS): $(BONUS_OBJ_FILES) $(LIBFT_DIR)/libft.a
+	cp $(LIBFT_DIR)/libft.a ./$(NAME_BONUS)
+	$(AR) $(NAME_BONUS) $(BONUS_OBJ_FILES)
+	cp $(NAME_BONUS) $(NAME)
 
 %_bonus.o: %_bonus.c $(BONUS_HEADER_FILES)
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -43,7 +43,8 @@ clean:
 	make -C $(LIBFT_DIR) clean
 
 fclean:
-	$(REMOVE) $(OBJ_FILES) $(BONUS_OBJ_FILES) $(NAME) $(NAME_BONUS)
+	$(REMOVE) $(OBJ_FILES) $(BONUS_OBJ_FILES)
+	$(REMOVE) $(NAME) $(NAME_BONUS)
 	make -C $(LIBFT_DIR) fclean
 
 re: fclean all
