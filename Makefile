@@ -1,4 +1,4 @@
-CC = clang
+CC = cc
 CFLAGS = -Wextra -Wall -Werror
 AR = ar rcs
 REMOVE = rm -f
