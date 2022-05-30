@@ -6,7 +6,7 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 02:45:21 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/29 03:16:52 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/29 22:33:40 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,17 @@ int	parse_pointer(va_list args, t_format *format)
 	ptr = va_arg(args, void *);
 	if (ptr == NULL)
 	{
-		write(1, "(nil)", 5);
-		return (5);
+		if (format->flags & JUSTIFY_LEFT)
+		{
+			write(1, "(nil)", 5);
+			write_repeated(' ', format->width - 5);
+		}
+		else
+		{
+			write_repeated(' ', format->width - 5);
+			write(1, "(nil)", 5);
+		}
+		return (max(5, format->width));
 	}
 	format->flags = (format->flags & JUSTIFY_LEFT) | HEX_PREFIX | LOWERCASE;
 	return (putnbr_hex_uint((unsigned long)ptr, format));

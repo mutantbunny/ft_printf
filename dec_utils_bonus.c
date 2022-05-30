@@ -6,7 +6,7 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 23:29:40 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/29 03:16:37 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/29 22:14:30 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ int	write_dec_padded(char *s, int len, t_format *format)
 	else
 		num_zeros = 0;
 	if (format->flags & JUSTIFY_LEFT)
-		return (write_dec_left_justified(s, len, format, num_zeros));
+		return (write_dec_left_justified(s, len, format, max(num_zeros, 0)));
 	else
-		return (write_dec_right_justified(s, len, format, num_zeros));
+		return (write_dec_right_justified(s, len, format, max(num_zeros, 0)));
 }
 
 int	putnbr_dec_int(int nbr, t_format *format)
@@ -79,7 +79,11 @@ int	putnbr_dec_int(int nbr, t_format *format)
 
 	pos = 10;
 	if (nbr == 0)
+	{
 		buf[--pos] = '0';
+		if (format->flags & PRECISION_SET && format->precision == 0)
+			pos = 10;
+	}
 	else
 	{
 		while (nbr != 0)
@@ -98,7 +102,11 @@ int	putnbr_dec_uint(unsigned int nbr, t_format *format)
 
 	pos = 10;
 	if (nbr == 0)
+	{
 		buf[--pos] = '0';
+		if (format->flags & PRECISION_SET && format->precision == 0)
+			pos = 10;
+	}
 	else
 	{
 		while (nbr != 0)

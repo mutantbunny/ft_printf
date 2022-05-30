@@ -6,7 +6,7 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 23:29:40 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/29 03:17:49 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/29 21:59:22 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,23 @@ int	write_hex_padded(char *s, int len, t_format *format)
 {
 	int	num_zeros;
 
+	num_zeros = 0;
 	if ((format->flags & PRECISION_SET))
-		num_zeros = format->precision - len;
+	{
+		if (format->precision > 0)
+			num_zeros = format->precision - len;
+	}
 	else if ((format->flags & PAD_WITH_ZEROS)
-		|| !(format->flags & JUSTIFY_LEFT))
+		&& !(format->flags & JUSTIFY_LEFT))
 	{
 		num_zeros = format->width - len;
 		if (format->flags & HEX_PREFIX)
 			num_zeros -= 2;
 	}
-	else
-		num_zeros = 0;
 	if (format->flags & JUSTIFY_LEFT)
-		return (write_hex_left_justified(s, len, format, num_zeros));
+		return (write_hex_left_justified(s, len, format, max(num_zeros, 0)));
 	else
-		return (write_hex_right_justified(s, len, format, num_zeros));
+		return (write_hex_right_justified(s, len, format, max(num_zeros, 0)));
 }
 
 char	get_hex_digit(unsigned int digit, t_format *format)
@@ -93,6 +95,8 @@ int	putnbr_hex_uint(unsigned long nbr, t_format *format)
 	{
 		buf[--pos] = '0';
 		format->flags &= (~HEX_PREFIX);
+		if (format->flags & PRECISION_SET && format->precision == 0)
+			pos = 16;
 	}
 	else
 	{

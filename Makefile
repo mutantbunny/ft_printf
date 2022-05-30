@@ -1,4 +1,4 @@
-CC = gcc
+CC = clang
 CFLAGS = -Wextra -Wall -Werror
 AR = ar rcs
 REMOVE = rm -f
@@ -19,6 +19,7 @@ NAME_BONUS = $(NAME:.a=_bonus.a)
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES) $(HEADER_FILES) $(LIBFT_DIR)/libft.a
+	$(REMOVE) $(NAME_BONUS)
 	cp $(LIBFT_DIR)/libft.a ./$(NAME)
 	$(AR) $(NAME) $(OBJ_FILES)
 
@@ -28,6 +29,8 @@ $(LIBFT_DIR)/libft.a:
 	make -C $(LIBFT_DIR) all
 
 $(NAME_BONUS): $(BONUS_OBJ_FILES) $(LIBFT_DIR)/libft.a
+	$(REMOVE) $(OBJ_FILES)
+	$(REMOVE) $(NAME)
 	cp $(LIBFT_DIR)/libft.a ./$(NAME_BONUS)
 	$(AR) $(NAME_BONUS) $(BONUS_OBJ_FILES)
 	cp $(NAME_BONUS) $(NAME)

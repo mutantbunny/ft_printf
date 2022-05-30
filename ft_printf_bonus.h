@@ -6,7 +6,7 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 18:02:55 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/29 03:10:15 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/29 22:35:00 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ int				putnbr_hex_uint(unsigned long nbr, t_format *format);
 // utils_bonus.c
 int				write_repeated(char ch, int num_ch);
 int				min(int a, int b);
+int				max(int a, int b);
 
 #endif

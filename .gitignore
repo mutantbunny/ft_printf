@@ -1,0 +1,10 @@
+tests/
+debug/
+ft_printf_tester/
+libft/
+printfTester/
+.vscode/
+*.o
+*.a
+*.so
+a.out

@@ -6,7 +6,7 @@
 /*   By: gmachado <gmachado@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 18:02:41 by gmachado          #+#    #+#             */
-/*   Updated: 2022/05/29 03:19:05 by gmachado         ###   ########.fr       */
+/*   Updated: 2022/05/29 22:34:07 by gmachado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ int	parse_precision(const char **str, t_format *format)
 	if (**str != '.')
 		return (0);
 	(*str)++;
-	format->flags |= PRECISION_SET;
 	precision = 0;
 	while (ft_isdigit(**str))
 	{
 		precision = precision * 10 + (**str - '0');
 		(*str)++;
 	}
+	format->flags |= PRECISION_SET;
 	return (precision);
 }
 
